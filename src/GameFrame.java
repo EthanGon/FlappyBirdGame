@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 
 public class GameFrame extends JFrame {
 
@@ -9,9 +10,11 @@ public class GameFrame extends JFrame {
         this.add(gamePanel);
         this.setTitle("Flappy Bird");
         this.setResizable(false);
+        this.setBackground(Color.BLACK);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setLocationRelativeTo(null);
-        this.setVisible(true);
         this.pack();
+        this.setVisible(true);
+        this.setLocationRelativeTo(null);
+
     }
 }
