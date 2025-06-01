@@ -15,24 +15,14 @@ public class GamePanel extends JPanel implements Runnable {
     private Thread gameThread;
     private Image img;
     private Graphics graphics;
-
     private Random random;
 
     private Bird bird;
-
-    Pipe pipe;
+    private Pipe pipe;
 
     int pipeWidth = 50;
     int pipeHeight = 230;
-
-    int pipeXSpawn = GAME_WIDTH - 10;
-    int pipeYSpawn = (GAME_HEIGHT / 2) - (pipeHeight / 2);
-
-
-
-
-
-
+    
     public GamePanel() {
         newBird();
         newPipe();
@@ -58,6 +48,7 @@ public class GamePanel extends JPanel implements Runnable {
         int randomY = random.nextInt(high - low) + low;
 
         pipe = new Pipe((GAME_WIDTH + 50), randomY, pipeWidth, pipeHeight, Color.RED);
+        System.out.println(pipe.y);
 
     }
 
@@ -71,7 +62,6 @@ public class GamePanel extends JPanel implements Runnable {
     public void draw(Graphics g) {
         bird.draw(g);
         pipe.draw(g);
-
 
     }
 
@@ -102,6 +92,13 @@ public class GamePanel extends JPanel implements Runnable {
             newPipe();
         }
 
+        if (bird.intersects(pipe.topPipe) || bird.intersects(pipe.bottomPipe)) {
+            bird.canJump = false;
+        } else if (bird.intersects(pipe) && !pipe.scored) {
+            pipe.scored = true;
+            bird.score++;
+            System.out.println(bird.score);
+        }
 
     }
 

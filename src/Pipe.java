@@ -2,10 +2,13 @@ import java.awt.*;
 
 public class Pipe extends Rectangle {
 
-    int speed = 2;
+    private final int speed = 2;
     Color color;
     TBPipe topPipe;
     TBPipe bottomPipe;
+
+    // using this bool var b/c if player is still in safe zone it keeps increasing score
+    public boolean scored = false;
 
     public Pipe(int x, int y, int width, int height, Color color) {
         super(x, y, width, height);
@@ -13,8 +16,6 @@ public class Pipe extends Rectangle {
 
         topPipe = new TBPipe(x, y+height, width, height * 2, Color.GREEN);
         bottomPipe = new TBPipe(x, y-height * 2, width, height * 2, Color.GREEN);
-
-
 
     }
 

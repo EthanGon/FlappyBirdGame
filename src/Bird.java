@@ -3,11 +3,13 @@ import java.awt.event.KeyEvent;
 
 public class Bird extends Rectangle {
 
-    private int yVel;
     public static int jumpForce = 125;
     private static int gravityForce = 2;
 
     private boolean touchingBounds = false;
+    public boolean canJump = true;
+
+    public int score = 0;
 
 
     public Bird(int x, int y, int width, int height) {
@@ -15,7 +17,7 @@ public class Bird extends Rectangle {
     }
 
     public void keyPressed(KeyEvent e) {
-        if (!touchingBounds) {
+        if (!touchingBounds && canJump) {
             this.y -= jumpForce;
             System.out.println("Key pressed");
         }
