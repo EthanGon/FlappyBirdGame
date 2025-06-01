@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class GamePanel extends JPanel implements Runnable {
 
@@ -7,7 +9,7 @@ public class GamePanel extends JPanel implements Runnable {
     private static final int GAME_HEIGHT = 800;
     private static final Dimension GAME_SIZE = new Dimension(GAME_WIDTH, GAME_HEIGHT);
 
-    private static final int BIRD_SIZE = 25;
+    private static final int BIRD_SIZE = 50;
 
     Thread gameThread;
     Image img;
@@ -28,7 +30,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void newBird() {
-        bird = new Bird(0, 0, BIRD_SIZE, BIRD_SIZE);
+        bird = new Bird(65, (GAME_WIDTH / 2) - BIRD_SIZE, BIRD_SIZE, BIRD_SIZE);
     }
 
     public void paint(Graphics g) {
@@ -40,6 +42,20 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void draw(Graphics g) {
         bird.draw(g);
+    }
+
+    public void move() {
+        bird.move();
+    }
+
+    public void checkColl() {
+
+    }
+
+    public class AL extends KeyAdapter {
+        public void keyPressed(KeyEvent e) {
+
+        }
     }
 
 
@@ -59,8 +75,8 @@ public class GamePanel extends JPanel implements Runnable {
 
 
             if (delta >= 1) {
-                // move();
-                // checkColl();
+                move();
+                checkColl();
                 repaint();
                 delta--;
 
