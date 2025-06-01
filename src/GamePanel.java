@@ -17,11 +17,14 @@ public class GamePanel extends JPanel implements Runnable {
 
     Bird bird;
 
-    Pipe[] pipes;
+
     int pipeCount = 0;
 
-    int pipeWidth = 25;
-    int pipeHeight = 80;
+    Pipe pipe;
+
+    int pipeWidth = 50;
+    int pipeHeight = 225;
+    int offset = 75;
 
     int pipeXSpawn = GAME_WIDTH - 10;
     int pipeYSpawn = (GAME_HEIGHT / 2) - (pipeHeight / 2);
@@ -49,13 +52,14 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void newPipe() {
-        pipes = new Pipe[3];
 
-        for (int i = 0; i < pipes.length; i++) {
-            pipes[i] = new Pipe(pipeXSpawn, pipeYSpawn, pipeWidth, pipeHeight);
-        }
+        pipe = new Pipe(pipeXSpawn, pipeYSpawn, pipeWidth, pipeHeight, Color.red);
 
-        pipeCount = 0;
+
+
+
+
+
     }
 
     public void paint(Graphics g) {
@@ -67,14 +71,19 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void draw(Graphics g) {
         bird.draw(g);
-        pipes[pipeCount % pipes.length].draw(g);
+        pipe.draw(g);
 
 
     }
 
     public void move() {
         bird.move();
-        pipes[pipeCount].move();
+
+        pipe.move();
+        pipe.topPipe.move();
+        pipe.bottomPipe.move();
+
+
     }
 
     public void checkColl() {
