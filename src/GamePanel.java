@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Random;
 
 public class GamePanel extends JPanel implements Runnable {
 
@@ -11,20 +12,18 @@ public class GamePanel extends JPanel implements Runnable {
 
     private static final int BIRD_SIZE = 50;
 
-    Thread gameThread;
-    Image img;
-    Graphics graphics;
+    private Thread gameThread;
+    private Image img;
+    private Graphics graphics;
 
-    Bird bird;
+    private Random random;
 
-
-    int pipeCount = 0;
+    private Bird bird;
 
     Pipe pipe;
 
     int pipeWidth = 50;
-    int pipeHeight = 225;
-    int offset = 75;
+    int pipeHeight = 230;
 
     int pipeXSpawn = GAME_WIDTH - 10;
     int pipeYSpawn = (GAME_HEIGHT / 2) - (pipeHeight / 2);
@@ -52,13 +51,13 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void newPipe() {
+        random = new Random();
 
-        pipe = new Pipe(pipeXSpawn, pipeYSpawn, pipeWidth, pipeHeight, Color.red);
+        int low = (GAME_HEIGHT / 2) - (pipeHeight / 2) - 175;
+        int high = (GAME_HEIGHT / 2) - (pipeHeight / 2) + 175;
+        int randomY = random.nextInt(high - low) + low;
 
-
-
-
-
+        pipe = new Pipe((GAME_WIDTH + 50), randomY, pipeWidth, pipeHeight, Color.RED);
 
     }
 
@@ -83,7 +82,6 @@ public class GamePanel extends JPanel implements Runnable {
         pipe.topPipe.move();
         pipe.bottomPipe.move();
 
-
     }
 
     public void checkColl() {
@@ -98,6 +96,13 @@ public class GamePanel extends JPanel implements Runnable {
             bird.touchingBounds(true);
             // TODO: gameLose/restartGame method
         }
+
+        // if pipe is out of bounds, spawn new pipe
+        if (pipe.x <= 0 - 50) {
+            newPipe();
+        }
+
+
     }
 
 

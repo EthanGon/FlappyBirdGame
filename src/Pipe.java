@@ -2,7 +2,7 @@ import java.awt.*;
 
 public class Pipe extends Rectangle {
 
-    int speed = 1;
+    int speed = 2;
     Color color;
     TBPipe topPipe;
     TBPipe bottomPipe;
