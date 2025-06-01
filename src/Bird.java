@@ -16,11 +16,16 @@ public class Bird extends Rectangle {
         super(x, y, width, height);
     }
 
-    public void keyPressed(KeyEvent e) {
-        if (!touchingBounds && canJump) {
+    public void jump(KeyEvent e) {
+        if (!touchingBounds && canJump && e.getKeyCode() == KeyEvent.VK_SPACE) {
             this.y -= jumpForce;
             System.out.println("Key pressed");
         }
+        canJump = false;
+    }
+
+    public void jumpRelease(KeyEvent e) {
+        canJump = true;
     }
 
     public void move() {

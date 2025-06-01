@@ -22,7 +22,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     int pipeWidth = 50;
     int pipeHeight = 230;
-    
+
     public GamePanel() {
         newBird();
         newPipe();
@@ -48,7 +48,6 @@ public class GamePanel extends JPanel implements Runnable {
         int randomY = random.nextInt(high - low) + low;
 
         pipe = new Pipe((GAME_WIDTH + 50), randomY, pipeWidth, pipeHeight, Color.RED);
-        System.out.println(pipe.y);
 
     }
 
@@ -115,7 +114,6 @@ public class GamePanel extends JPanel implements Runnable {
             delta += (now - lastTime) / ns;
             lastTime = now;
 
-
             if (delta >= 1) {
                 move();
                 checkColl();
@@ -128,7 +126,11 @@ public class GamePanel extends JPanel implements Runnable {
 
     public class AL extends KeyAdapter {
         public void keyPressed(KeyEvent e) {
-            bird.keyPressed(e);
+            bird.jump(e);
+        }
+
+        public void keyReleased(KeyEvent e) {
+            bird.jumpRelease(e);
         }
     }
 }
