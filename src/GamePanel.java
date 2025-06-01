@@ -13,8 +13,11 @@ public class GamePanel extends JPanel implements Runnable {
     Image img;
     Graphics graphics;
 
+    Bird bird;
+
 
     public GamePanel() {
+        newBird();
 
         this.setFocusable(true);
         this.setPreferredSize(GAME_SIZE);
@@ -22,6 +25,10 @@ public class GamePanel extends JPanel implements Runnable {
         gameThread = new Thread(this);
         gameThread.start();
 
+    }
+
+    public void newBird() {
+        bird = new Bird(0, 0, BIRD_SIZE, BIRD_SIZE);
     }
 
     public void paint(Graphics g) {
@@ -32,7 +39,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void draw(Graphics g) {
-
+        bird.draw(g);
     }
 
 
