@@ -4,8 +4,10 @@ import java.awt.event.KeyEvent;
 public class Bird extends Rectangle {
 
     private int yVel;
-    private static final int jumpForce = 10;
-    private static final int gravityForce = 2;
+    public static int jumpForce = 125;
+    private static int gravityForce = 2;
+
+    private boolean touchingBounds = false;
 
 
     public Bird(int x, int y, int width, int height) {
@@ -13,13 +15,24 @@ public class Bird extends Rectangle {
     }
 
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-
+        if (!touchingBounds) {
+            this.y -= jumpForce;
+            System.out.println("Key pressed");
         }
     }
 
     public void move() {
-        this.y += gravityForce;
+        if (!touchingBounds) {
+            y += gravityForce;
+        }
+    }
+
+    public void setGravity(int gravity) {
+        gravityForce = gravity;
+    }
+
+    public void touchingBounds(boolean value) {
+        touchingBounds = value;
     }
 
     public void draw(Graphics g) {

@@ -22,6 +22,7 @@ public class GamePanel extends JPanel implements Runnable {
         newBird();
 
         this.setFocusable(true);
+        this.addKeyListener(new AL());
         this.setPreferredSize(GAME_SIZE);
 
         gameThread = new Thread(this);
@@ -49,12 +50,16 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void checkColl() {
+        if (bird.y >= GAME_HEIGHT - BIRD_SIZE) {
+            bird.y = GAME_HEIGHT - BIRD_SIZE;
+            bird.touchingBounds(true);
+            // TODO: gameLose/restartGame method
+        }
 
-    }
-
-    public class AL extends KeyAdapter {
-        public void keyPressed(KeyEvent e) {
-
+        if (bird.y <= 0) {
+            bird.y = 0;
+            bird.touchingBounds(true);
+            // TODO: gameLose/restartGame method
         }
     }
 
@@ -81,6 +86,12 @@ public class GamePanel extends JPanel implements Runnable {
                 delta--;
 
             }
+        }
+    }
+
+    public class AL extends KeyAdapter {
+        public void keyPressed(KeyEvent e) {
+            bird.keyPressed(e);
         }
     }
 }
