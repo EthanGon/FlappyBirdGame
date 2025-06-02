@@ -2,13 +2,17 @@ import java.awt.*;
 
 public class Score extends Rectangle {
 
-    int w;
-    int h;
-    int score;
+    private int w = 50;
+    private int h;
+    private int score;
 
     public Score(int width, int height) {
         w = width;
         h = height;
+    }
+
+    public void addScore() {
+        score++;
     }
 
     public void draw(Graphics g) {

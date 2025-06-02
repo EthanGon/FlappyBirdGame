@@ -9,9 +9,6 @@ public class Bird extends Rectangle {
     private boolean touchingBounds = false;
     public boolean canJump = true;
 
-    public int score = 0;
-
-
     public Bird(int x, int y, int width, int height) {
         super(x, y, width, height);
     }

@@ -22,10 +22,10 @@ public class GamePanel extends JPanel implements Runnable {
 
     private Bird bird;
     private Pipe pipe;
-    private Score score;
+    private final Score score;
 
-    private int pipeWidth = 50;
-    private int pipeHeight = 230;
+    private final int pipeWidth = 50;
+    private final int pipeHeight = 230;
 
     public GamePanel() {
         newBird();
@@ -73,7 +73,6 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void move() {
         bird.move();
-
         pipe.move();
         pipe.topPipe.move();
         pipe.bottomPipe.move();
@@ -99,12 +98,10 @@ public class GamePanel extends JPanel implements Runnable {
             bird.canJump = false;
         } else if (bird.intersects(pipe) && !pipe.scored) {
             pipe.scored = true;
-            bird.score++;
-            System.out.println(bird.score);
+            score.addScore();
         }
 
     }
-
 
     @Override
     public void run() {
