@@ -1,7 +1,10 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.Random;
 
 public class GamePanel extends JPanel implements Runnable {
@@ -10,7 +13,7 @@ public class GamePanel extends JPanel implements Runnable {
     private static final int GAME_HEIGHT = 800;
     private static final Dimension GAME_SIZE = new Dimension(GAME_WIDTH, GAME_HEIGHT);
 
-    private static final int BIRD_SIZE = 50;
+    private static final int BIRD_SIZE = 25;
 
     private Thread gameThread;
     private Image img;
@@ -19,13 +22,16 @@ public class GamePanel extends JPanel implements Runnable {
 
     private Bird bird;
     private Pipe pipe;
+    private Score score;
 
-    int pipeWidth = 50;
-    int pipeHeight = 230;
+    private int pipeWidth = 50;
+    private int pipeHeight = 230;
 
     public GamePanel() {
         newBird();
         newPipe();
+
+        score = new Score(GAME_WIDTH, GAME_HEIGHT);
 
         this.setFocusable(true);
         this.addKeyListener(new AL());
@@ -54,6 +60,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void paint(Graphics g) {
         img = createImage(getWidth(), getHeight());
         graphics = img.getGraphics();
+
         draw(graphics);
         g.drawImage(img, 0, 0, this);
     }
@@ -61,7 +68,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void draw(Graphics g) {
         bird.draw(g);
         pipe.draw(g);
-
+        score.draw(g);
     }
 
     public void move() {
@@ -70,18 +77,15 @@ public class GamePanel extends JPanel implements Runnable {
         pipe.move();
         pipe.topPipe.move();
         pipe.bottomPipe.move();
-
     }
 
     public void checkColl() {
         if (bird.y >= GAME_HEIGHT - BIRD_SIZE) {
-            bird.y = GAME_HEIGHT - BIRD_SIZE;
             bird.touchingBounds(true);
             // TODO: gameLose/restartGame method
         }
 
         if (bird.y <= 0) {
-            bird.y = 0;
             bird.touchingBounds(true);
             // TODO: gameLose/restartGame method
         }
@@ -130,7 +134,7 @@ public class GamePanel extends JPanel implements Runnable {
         }
 
         public void keyReleased(KeyEvent e) {
-            bird.jumpRelease(e);
+            bird.jumpReleased(e);
         }
     }
 }

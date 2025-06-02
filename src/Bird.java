@@ -24,18 +24,12 @@ public class Bird extends Rectangle {
         canJump = false;
     }
 
-    public void jumpRelease(KeyEvent e) {
+    public void jumpReleased(KeyEvent e) {
         canJump = true;
     }
 
     public void move() {
-        if (!touchingBounds) {
-            y += gravityForce;
-        }
-    }
-
-    public void setGravity(int gravity) {
-        gravityForce = gravity;
+        y += gravityForce;
     }
 
     public void touchingBounds(boolean value) {
