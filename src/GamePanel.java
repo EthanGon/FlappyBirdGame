@@ -49,6 +49,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void newPipe() {
         random = new Random();
 
+        // randomize the pipe gap to be between game-height -/+ 175
         int low = (GAME_HEIGHT / 2) - (pipeHeight / 2) - 175;
         int high = (GAME_HEIGHT / 2) - (pipeHeight / 2) + 175;
         int randomY = random.nextInt(high - low) + low;
@@ -60,7 +61,6 @@ public class GamePanel extends JPanel implements Runnable {
     public void paint(Graphics g) {
         img = createImage(getWidth(), getHeight());
         graphics = img.getGraphics();
-
         draw(graphics);
         g.drawImage(img, 0, 0, this);
     }

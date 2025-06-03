@@ -22,7 +22,9 @@ public class Bird extends Rectangle {
     }
 
     public void jumpReleased(KeyEvent e) {
-        canJump = true;
+        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+            canJump = true;
+        }
     }
 
     public void move() {
