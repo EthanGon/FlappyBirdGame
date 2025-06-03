@@ -2,7 +2,7 @@ import java.awt.*;
 
 public class Score extends Rectangle {
 
-    private int w = 50;
+    private int w;
     private int h;
     private int score;
 
@@ -13,12 +13,12 @@ public class Score extends Rectangle {
 
     public void addScore() {
         score++;
+
     }
 
     public void draw(Graphics g) {
         g.setColor(Color.WHITE);
         g.setFont(new Font("TimesRoman", Font.BOLD, 30));
-
         g.drawString("Score: " + score, 50, 50);
     }
 

@@ -38,7 +38,7 @@ public class Bird extends Rectangle {
         then make the force negative, to go up a bit
 
         then when the player's current y is more than (technically less than but w.e) player's lastY plus a certain amount
-        then start dropping again, kinda a way to simulate gravity 
+        then start dropping again, kinda a way to simulate gravity
         * */
 
         if (isJumping) {

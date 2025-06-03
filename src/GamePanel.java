@@ -1,10 +1,8 @@
-import javax.imageio.ImageIO;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.util.Random;
 
 public class GamePanel extends JPanel implements Runnable {
@@ -22,16 +20,19 @@ public class GamePanel extends JPanel implements Runnable {
 
     private Bird bird;
     private Pipe pipe;
-    private final Score score;
 
-    private final int pipeWidth = 50;
-    private final int pipeHeight = 230;
+    private Score score;
+    private final GameOverScreen gameOverScreen;
+
+    private final int PIPE_WIDTH = 50;
+    private final int PIPE_HEIGHT = 230;
 
     public GamePanel() {
         newPipe();
         newBird();
+        newScore();
 
-        score = new Score(GAME_WIDTH, GAME_HEIGHT);
+        gameOverScreen = new GameOverScreen(GAME_WIDTH, GAME_HEIGHT);
 
         this.setFocusable(true);
         this.addKeyListener(new AL());
@@ -42,6 +43,17 @@ public class GamePanel extends JPanel implements Runnable {
 
     }
 
+    public void restartGame() {
+        newPipe();
+        newBird();
+        newScore();
+        gameOverScreen.gameOver = false;
+    }
+
+    public void newScore() {
+        score = new Score(GAME_WIDTH, GAME_HEIGHT);
+    }
+
     public void newBird() {
         bird = new Bird(65, (GAME_WIDTH / 2) - BIRD_SIZE, BIRD_SIZE, BIRD_SIZE);
     }
@@ -50,11 +62,11 @@ public class GamePanel extends JPanel implements Runnable {
         random = new Random();
 
         // randomize the pipe gap to be between game-height -/+ 175
-        int low = (GAME_HEIGHT / 2) - (pipeHeight / 2) - 175;
-        int high = (GAME_HEIGHT / 2) - (pipeHeight / 2) + 175;
+        int low = (GAME_HEIGHT / 2) - (PIPE_HEIGHT / 2) - 175;
+        int high = (GAME_HEIGHT / 2) - (PIPE_HEIGHT / 2) + 175;
         int randomY = random.nextInt(high - low) + low;
 
-        pipe = new Pipe((GAME_WIDTH + 50), randomY, pipeWidth, pipeHeight, Color.BLACK);
+        pipe = new Pipe((GAME_WIDTH + 50), randomY, PIPE_WIDTH, PIPE_HEIGHT, Color.BLACK);
 
     }
 
@@ -66,10 +78,12 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void draw(Graphics g) {
-
         pipe.draw(g);
         score.draw(g);
         bird.draw(g);
+
+        // TODO: only draw when player has died
+        gameOverScreen.draw(g);
     }
 
     public void move() {
@@ -82,12 +96,12 @@ public class GamePanel extends JPanel implements Runnable {
     public void checkColl() {
         if (bird.y >= GAME_HEIGHT - BIRD_SIZE) {
             bird.touchingBounds(true);
-            // TODO: gameLose/restartGame method
+            gameOverScreen.gameOver = true;
         }
 
         if (bird.y <= 0) {
             bird.touchingBounds(true);
-            // TODO: gameLose/restartGame method
+            gameOverScreen.gameOver = true;
         }
 
         // if pipe is out of bounds, spawn new pipe
@@ -96,6 +110,7 @@ public class GamePanel extends JPanel implements Runnable {
         }
 
         if (bird.intersects(pipe.topPipe) || bird.intersects(pipe.bottomPipe)) {
+            gameOverScreen.gameOver = true;
             bird.canJump = false;
         } else if (bird.intersects(pipe) && !pipe.scored) {
             pipe.scored = true;
@@ -129,7 +144,14 @@ public class GamePanel extends JPanel implements Runnable {
     public class AL extends KeyAdapter {
         public void keyPressed(KeyEvent e) {
             bird.jump(e);
+
+            if (e.getKeyCode() == KeyEvent.VK_1 && gameOverScreen.gameOver) {
+                restartGame();
+            }
+
         }
+
+
 
         public void keyReleased(KeyEvent e) {
             bird.jumpReleased(e);
