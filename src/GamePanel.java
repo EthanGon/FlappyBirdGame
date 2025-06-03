@@ -28,8 +28,8 @@ public class GamePanel extends JPanel implements Runnable {
     private final int pipeHeight = 230;
 
     public GamePanel() {
-        newBird();
         newPipe();
+        newBird();
 
         score = new Score(GAME_WIDTH, GAME_HEIGHT);
 
@@ -54,7 +54,7 @@ public class GamePanel extends JPanel implements Runnable {
         int high = (GAME_HEIGHT / 2) - (pipeHeight / 2) + 175;
         int randomY = random.nextInt(high - low) + low;
 
-        pipe = new Pipe((GAME_WIDTH + 50), randomY, pipeWidth, pipeHeight, Color.RED);
+        pipe = new Pipe((GAME_WIDTH + 50), randomY, pipeWidth, pipeHeight, Color.BLACK);
 
     }
 
@@ -66,9 +66,10 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void draw(Graphics g) {
-        bird.draw(g);
+
         pipe.draw(g);
         score.draw(g);
+        bird.draw(g);
     }
 
     public void move() {

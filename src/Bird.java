@@ -9,25 +9,39 @@ public class Bird extends Rectangle {
     private boolean touchingBounds = false;
     public boolean canJump = true;
 
+    boolean isJumping = false;
+    int lastY;
+
     public Bird(int x, int y, int width, int height) {
         super(x, y, width, height);
     }
 
     public void jump(KeyEvent e) {
         if (!touchingBounds && canJump && e.getKeyCode() == KeyEvent.VK_SPACE) {
-            this.y -= jumpForce;
-            System.out.println("Key pressed");
+            //this.y -= jumpForce;
+            isJumping = true;
+            lastY = y;
         }
         canJump = false;
     }
 
     public void jumpReleased(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-            canJump = true;
+           canJump = true;
         }
     }
 
     public void move() {
+        if (isJumping) {
+            gravityForce = -2;
+        }
+
+        if (y <= lastY - 100) {
+            isJumping = false;
+            gravityForce = 2;
+        }
+
+
         y += gravityForce;
     }
 
