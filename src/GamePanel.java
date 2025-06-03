@@ -26,11 +26,15 @@ public class GamePanel extends JPanel implements Runnable {
     private final int PIPE_WIDTH = 50;
     private final int PIPE_HEIGHT = 230;
 
+    public Sound scoreSound = new Sound();
+
+
     public GamePanel() {
         newPipe();
         newBird();
         newScore();
 
+        scoreSound.setFile(0);
         gameOverScreen = new GameOverScreen(GAME_WIDTH, GAME_HEIGHT);
 
         this.setFocusable(true);
@@ -113,6 +117,8 @@ public class GamePanel extends JPanel implements Runnable {
             bird.canJump = false;
         } else if (bird.intersects(pipe) && !pipe.scored) {
             pipe.scored = true;
+            scoreSound.play();
+            scoreSound.setFile(0);
             score.addScore();
         }
 

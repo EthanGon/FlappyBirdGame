@@ -3,7 +3,7 @@ import java.awt.event.KeyEvent;
 
 public class Bird extends Rectangle {
 
-    public static int jumpForce = 125;
+
     private static int gravityForce = 2;
 
     private boolean touchingBounds = false;

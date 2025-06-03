@@ -2,8 +2,8 @@ import java.awt.*;
 
 public class GameOverScreen extends Rectangle {
 
-    static int GW;
-    static int GH;
+    private static int GW;
+    private static int GH;
     private boolean gameOver = false;
 
     public GameOverScreen(int w, int h) {
