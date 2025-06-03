@@ -15,7 +15,7 @@ public class GameOverScreen extends Rectangle {
         if (gameOver) {
             g.setColor(Color.RED);
             g.drawString("GAME OVER", (GW / 2) - 100, (GH / 2));
-            g.drawString("PRESS 1 TO PLAY AGAIN", (GW / 2) - 185, (GH / 2) + 50);
+            g.drawString("PRESS 1 TO PLAY AGAIN", (GW / 2) - 250, (GH / 2) + 50);
         }
     }
 
