@@ -11,7 +11,6 @@ public class GameFrame extends JFrame {
         this.setTitle("Flappy Bird");
         this.setResizable(false);
         this.setBackground(Color.BLACK);
-
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
         this.setVisible(true);

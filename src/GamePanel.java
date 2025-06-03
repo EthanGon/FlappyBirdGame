@@ -1,4 +1,3 @@
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -47,7 +46,7 @@ public class GamePanel extends JPanel implements Runnable {
         newPipe();
         newBird();
         newScore();
-        gameOverScreen.gameOver = false;
+        gameOverScreen.setGameOver(false);
     }
 
     public void newScore() {
@@ -96,21 +95,21 @@ public class GamePanel extends JPanel implements Runnable {
     public void checkColl() {
         if (bird.y >= GAME_HEIGHT - BIRD_SIZE) {
             bird.touchingBounds(true);
-            gameOverScreen.gameOver = true;
+            gameOverScreen.setGameOver(true);
         }
 
         if (bird.y <= 0) {
             bird.touchingBounds(true);
-            gameOverScreen.gameOver = true;
+            gameOverScreen.setGameOver(true);
         }
 
         // if pipe is out of bounds, spawn new pipe
-        if (pipe.x <= 0 - 50) {
+        if (pipe.x <= -50) {
             newPipe();
         }
 
         if (bird.intersects(pipe.topPipe) || bird.intersects(pipe.bottomPipe)) {
-            gameOverScreen.gameOver = true;
+            gameOverScreen.setGameOver(true);
             bird.canJump = false;
         } else if (bird.intersects(pipe) && !pipe.scored) {
             pipe.scored = true;
@@ -143,18 +142,20 @@ public class GamePanel extends JPanel implements Runnable {
 
     public class AL extends KeyAdapter {
         public void keyPressed(KeyEvent e) {
-            bird.jump(e);
+            if (!gameOverScreen.getGameOver()) {
+                bird.jump(e);
+            }
 
-            if (e.getKeyCode() == KeyEvent.VK_1 && gameOverScreen.gameOver) {
+            if (e.getKeyCode() == KeyEvent.VK_1 && gameOverScreen.getGameOver()) {
                 restartGame();
             }
 
         }
 
-
-
         public void keyReleased(KeyEvent e) {
-            bird.jumpReleased(e);
+            if (!gameOverScreen.getGameOver()) {
+                bird.jumpReleased(e);
+            }
         }
     }
 }
