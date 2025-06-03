@@ -32,6 +32,15 @@ public class Bird extends Rectangle {
     }
 
     public void move() {
+
+        /*
+        when player presses "Space", isJumping == false, and stores the y in lastY to use later,
+        then make the force negative, to go up a bit
+
+        then when the player's current y is more than (technically less than but w.e) player's lastY plus a certain amount
+        then start dropping again, kinda a way to simulate gravity 
+        * */
+
         if (isJumping) {
             gravityForce = -2;
         }
@@ -40,7 +49,6 @@ public class Bird extends Rectangle {
             isJumping = false;
             gravityForce = 2;
         }
-
 
         y += gravityForce;
     }
